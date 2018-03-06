@@ -1,16 +1,19 @@
 # resilient-scalable-cloud-networking
 The Problem
+-----------
 Service(HTTP, SMTP, POP, IMAP) connections terminating at the server(physical/VM) providing the service
 The compute surface is the attack surface
 Non-optimal utilization of the cloud network due to the “impedance mismatch” between the high latency/low mtu WAN and low latency/high mtu cloud
 Complicates Virtual Machine mobility
 
 The Proposal
+------------
 Terminate TCP connections and service protocol(HTTP, SMTP, POP, IMAP) sessions at the cloud edge
 Carry the service layer request/response messages to/from the application servers asynchronously  via a message bus 
 Collect Edge network, cloud message and application server load metrics and use them along with security/performance policies to secure and scale the cloud
 
 Architecture
+------------
 The solution involves the following components:
 Edge WCCP router that transparently redirects incoming Web and Mail traffic to the TSAs
 TSA(Transport/Session Adapter)s 
@@ -29,6 +32,7 @@ Application Service Manager(ASM) uses metrics provided by the ICP along with App
 Application Server(AS)s read requests from the appropriate Application Service Queue, process them and write response messages to the appropriate TSA Queue for transmission to the client that made the request.
 
 Advantages
+----------
 
 The proposed solution builds on traditional TCP acceleration techniques[6] and simplifies the deployment of a "canonical cloud architecture” [1] by enhancing the network to provide “asynchronous, persistently queued events" and support "dynamically scalable CPUs".
 Simplifies VM mobility
@@ -36,7 +40,8 @@ The TSAs provide a “World - Cloud barrier”(like the human body’s “Blood-
 Allows for easy detection of attacks like the “slow-motion DoS attack”[2] which would be difficult to detect without the application message visibility afforded by the proposed architecture.
 
 References
-[1]The Canonical Cloud Architecture - http://highscalability.com/blog/2009/8/7/t he-canonical-cloud-architecture.html
+----------
+[1]The Canonical Cloud Architecture - http://highscalability.com/blog/2009/8/7/the-canonical-cloud-architecture.html
 
 [2]New slow-motion DoS attack: just a few PCs, little fear of detection – http://arstechnica.com/business/2012/01/new-slow-motion-dos-attack-just-a-few-pcs-little-fear-of-detection/
 
